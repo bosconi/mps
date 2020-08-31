@@ -112,6 +112,25 @@ static void test_stepper(mps_addr_t object, mps_fmt_t fmt, mps_pool_t pool,
 }
 
 
+/* area_scan -- area scanning function for mps_pool_walk */
+
+static mps_res_t area_scan(mps_ss_t ss, void *base, void *limit, void *closure)
+{
+  unsigned long *count = closure;
+  mps_res_t res;
+  while (base < limit) {
+    mps_addr_t prev = base;
+    ++ *count;
+    dylan_mutate(base);
+    res = dylan_scan1(ss, &base);
+    if (res != MPS_RES_OK) return res;
+    Insist(prev < base);
+  }
+  Insist(base == limit);
+  return MPS_RES_OK;
+}
+
+
 /* test -- the body of the test */
 
 static void *test(void *arg, size_t s)
@@ -182,11 +201,14 @@ static void *test(void *arg, size_t s)
            "NULL in arena");
 
       {
-        unsigned long object_count = 0;
+        unsigned long count1 = 0, count2 = 0;
         mps_arena_expose(arena);
-        mps_arena_formatted_objects_walk(arena, test_stepper, &object_count, 0);
+        mps_arena_formatted_objects_walk(arena, test_stepper, &count1, 0);
+        die(mps_pool_walk(pool_g, area_scan, &count2), "mps_pool_walk");
         mps_arena_release(arena);
-        printf("stepped on %lu objects.\n", object_count);
+        printf("stepped on %lu objects.\n", count1);
+        printf("walked %lu objects.\n", count2);
+        Insist(count1 == count2);
       }
     }
 

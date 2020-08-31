@@ -116,7 +116,7 @@ void ScanStateInit(ScanState ss, TraceSet ts, Arena arena,
   ss->traces = ts;
   ScanStateSetZoneShift(ss, arena->zoneShift);
   ScanStateSetUnfixedSummary(ss, RefSetEMPTY);
-  AVER(ss->fixedSummary == RefSetEMPTY);
+  ss->fixedSummary = RefSetEMPTY;
   ss->arena = arena;
   ss->wasMarked = TRUE;
   ScanStateSetWhite(ss, white);
@@ -1176,6 +1176,8 @@ RefSet ScanStateSummary(ScanState ss)
  */
 void ScanStateUpdateSummary(ScanState ss, Seg seg, Bool wasTotal)
 {
+  RefSet summary;
+
   AVERT(ScanState, ss);
   AVERT(Seg, seg);
   AVERT(Bool, wasTotal);
@@ -1185,7 +1187,7 @@ void ScanStateUpdateSummary(ScanState ss, Seg seg, Bool wasTotal)
     /* If we scanned every reference in the segment then we have a
        complete summary we can set. Otherwise, we just have
        information about more zones that the segment refers to. */
-    if (res == wasTotal)
+    if (wasTotal)
       summary = ScanStateSummary(ss);
     else
       summary = RefSetUnion(SegSummary(seg), ScanStateSummary(ss));
@@ -1207,7 +1209,6 @@ static Res traceScanSegRes(TraceSet ts, Rank rank, Arena arena, Seg seg)
   Bool wasTotal;
   ZoneSet white;
   Res res;
-  RefSet summary;
 
   /* The reason for scanning a segment is that it's grey. */
   AVER(TraceSetInter(ts, SegGrey(seg)) != TraceSetEMPTY);
