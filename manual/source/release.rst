@@ -61,8 +61,9 @@ Interface changes
    .. |struct| replace:: ``struct.unpack``
    .. _struct: https://docs.python.org/3/library/struct.html#struct.unpack
 
-#. The function :c:func:`mps_formatted_objects_walk` is deprecated in
-   favour of the new function :c:func:`mps_pool_walk`.
+#. The functions :c:func:`mps_formatted_objects_walk` and
+   :c:func:`mps_amc_apply` are deprecated in favour of the new
+   function :c:func:`mps_pool_walk`.
 
 
 Other changes
