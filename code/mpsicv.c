@@ -494,19 +494,6 @@ static void *test(void *arg, size_t s)
         mps_arena_clamp(arena);
         clamp_until = i + 10000;
       }
-      if(collections % 6 == 0) {
-        mps_arena_expose(arena);
-        mps_arena_release(arena);
-      }
-      if(collections % 6 == 3) {
-        mps_arena_unsafe_expose_remember_protection(arena);
-        mps_arena_unsafe_restore_protection(arena);
-        mps_arena_release(arena);
-      }
-      if(collections % 6 == 4) {
-        mps_arena_unsafe_expose_remember_protection(arena);
-        mps_arena_release(arena);
-      }
       if(collections % 3 == 2) {
         mps_arena_park(arena);
         mps_arena_release(arena);

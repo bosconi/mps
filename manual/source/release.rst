@@ -41,6 +41,12 @@ Interface changes
    :c:func:`mps_pool_free_size` and :c:func:`mps_pool_total_size`
    instead.
 
+#. Deprecated functions :c:func:`mps_arena_expose`,
+   :c:func:`mps_arena_unsafe_expose_remember_protection` and
+   :c:func:`mps_arena_unsafe_expose_restore_protection` have been
+   removed. If you need access to protected memory for debugging a
+   fatal error, use :c:func:`mps_arena_postmortem` instead.
+
 #. The keyword argument ``MPS_KEY_SPARE_COMMIT_LIMIT`` to
    :c:func:`mps_arena_create_k`, and the functions
    :c:func:`mps_arena_spare_commit_limit` and
