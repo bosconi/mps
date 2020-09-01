@@ -41,6 +41,11 @@ Interface changes
    :c:func:`mps_pool_free_size` and :c:func:`mps_pool_total_size`
    instead.
 
+#. The reservoir functions :c:func:`mps_ap_fill_with_reservoir_permit`,
+   :c:func:`mps_reservoir_available`, :c:func:`mps_reservoir_limit`,
+   :c:func:`mps_reservoir_limit_set` and
+   :c:func:`mps_reserve_with_reservoir_permit`, have been removed.
+
 #. The keyword argument ``MPS_KEY_SPARE_COMMIT_LIMIT`` to
    :c:func:`mps_arena_create_k`, and the functions
    :c:func:`mps_arena_spare_commit_limit` and
