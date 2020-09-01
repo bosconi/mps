@@ -41,6 +41,9 @@ Interface changes
    :c:func:`mps_pool_free_size` and :c:func:`mps_pool_total_size`
    instead.
 
+#. The deprecated function :c:func:`mps_fix` has been removed. Use
+   :c:func:`MPS_FIX1` and :c:func:`MPS_FIX2` instead.
+
 #. The keyword argument ``MPS_KEY_SPARE_COMMIT_LIMIT`` to
    :c:func:`mps_arena_create_k`, and the functions
    :c:func:`mps_arena_spare_commit_limit` and
