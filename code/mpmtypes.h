@@ -77,6 +77,7 @@ typedef struct mps_pool_s *Pool;        /* <design/pool> */
 typedef Pool AbstractPool;
 typedef struct mps_pool_class_s *PoolClass;  /* <code/poolclas.c> */
 typedef struct TraceStruct *Trace;      /* <design/trace> */
+typedef unsigned ScanStateCallbackType;
 typedef struct ScanStateStruct *ScanState; /* <design/trace> */
 typedef struct mps_chain_s *Chain;      /* <design/trace> */
 typedef struct TractStruct *Tract;      /* <design/arena> */
@@ -408,6 +409,15 @@ enum {
   FindDeleteHIGH,     /* delete size bytes from high end of block */
   FindDeleteENTIRE,   /* delete entire range */
   FindDeleteLIMIT     /* not a FindDelete operation; the limit of the enum. */
+};
+
+
+/* ScanStateCallbackType -- client callback types for formatted objects */
+
+enum {
+  ScanStateCallbackTypeFORMAT,  /* mps_fmt_scan_t */
+  ScanStateCallbackTypeAREA,    /* mps_area_scan_t plus closure */
+  ScanStateCallbackTypeLIMIT    /* limit of the enum */
 };
 
 

@@ -432,8 +432,9 @@ static Res poolWalk(Arena arena, Pool pool, mps_area_scan_t area_scan, void *clo
   ts = TraceSetSingle(trace);
 
   ScanStateInit(&ss, ts, arena, RankEXACT, trace->white);
-  ss.formatScan = area_scan;
-  ss.formatScanClosure = closure;
+  ss.callbackType = ScanStateCallbackTypeAREA;
+  ss.callback.area.scan = area_scan;
+  ss.callback.area.closure = closure;
   ss.fix = walkNoFix;
 
   RING_FOR(node, &pool->segRing, nextNode) {

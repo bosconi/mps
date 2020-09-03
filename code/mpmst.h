@@ -402,8 +402,14 @@ typedef struct ScanStateStruct {
   Sig sig;                      /* <design/sig> */
   struct mps_ss_s ss_s;         /* .ss <http://bash.org/?400459> */
   Arena arena;                  /* owning arena */
-  mps_area_scan_t formatScan;   /* formatted area scanning function */
-  void *formatScanClosure;      /* closure argument for .formatScan */
+  ScanStateCallbackType callbackType; /* discriminator for .callback */
+  union {
+    mps_fmt_scan_t format;
+    struct {
+      mps_area_scan_t scan;
+      void *closure;            /* closure argument for scan */
+    } area;
+  } callback;                   /* callback for scanning formatted objects */
   SegFixMethod fix;             /* third stage fix function */
   void *fixClosure;             /* see .ss.fix-closure */
   TraceSet traces;              /* traces to scan for */
